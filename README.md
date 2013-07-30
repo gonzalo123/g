@@ -55,3 +55,86 @@ services:
   Symfony\Component\HttpFoundation\Response:
     class: Symfony\Component\HttpFoundation\Response
 ```
+
+### Controller
+```
+<?php
+
+class AppController
+{
+    public function homeAction()
+    {
+        return "AppController::home";
+    }
+}
+```
+
+#### Complex controller
+
+another route:
+```
+hello:
+  path: /hello/{name}
+  defaults: { _controller: AppController::helloAction}
+```
+
+```
+class AppController
+{
+    private $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    public function helloAction($name, JsonResponse $response)
+    {
+        return $response->setData([$name, 1, 2]);
+    }
+}
+```
+
+### RESTFull controllers
+
+we add to our services.yml:
+```
+restResources:
+  book:
+    path: /resource/book
+    class: BookResource
+```
+
+And we define our BookResource
+
+```
+<?php
+
+class BookResource
+{
+    public function getAction($id)
+    {
+        return "BookResource:getAction " . $id;
+    }
+
+    public function getAllAction()
+    {
+        return "BookResource:getAllAction";
+    }
+
+    public function saveAction($id)
+    {
+        return "BookResource:saveAction " . $id;
+    }
+
+    public function addAction()
+    {
+        return "BookResource:addAction";
+    }
+
+    public function deleteAction($id)
+    {
+        return "BookResource:deleteAction " . $id;
+    }
+}
+```
