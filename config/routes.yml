@@ -1,0 +1,19 @@
+home:
+  path: /
+  defaults: { _controller: AppController::homeAction}
+
+hello:
+  path: /hello/{name}
+  defaults: { _controller: AppController::helloAction}
+
+twig:
+  path: /twig/{name}
+  defaults: { _controller: AppController::renderTwigAction}
+
+db1:
+  path: /db/{name}
+  defaults: { _controller: AppController::dbAction}
+
+blog:
+  prefix: /api
+  resource: routes/api.yml

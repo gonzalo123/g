@@ -1,0 +1,13 @@
+parameters:
+  twig:
+    cache: cache
+    auto_reload: true
+
+services:
+  Twig_Loader_Filesystem:
+    class: Twig_Loader_Filesystem
+    arguments: [%view.path%]
+
+  Twig_Environment:
+    class: Twig_Environment
+    arguments: [@Twig_Loader_Filesystem, %twig%]

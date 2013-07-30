@@ -1,0 +1,4 @@
+restResources:
+  book:
+    path: /resource/book
+    class: BookResource

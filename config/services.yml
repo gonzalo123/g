@@ -1,0 +1,14 @@
+imports:
+  - resource: services/database.yml
+  - resource: services/view.yml
+  - resource: rest/resources.yml
+
+services:
+  Foo\Bar:
+    class: Foo\Bar
+
+  Symfony\Component\HttpFoundation\JSonResponse:
+    class: Symfony\Component\HttpFoundation\JSonResponse
+
+  Symfony\Component\HttpFoundation\Response:
+    class: Symfony\Component\HttpFoundation\Response

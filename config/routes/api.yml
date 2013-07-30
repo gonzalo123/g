@@ -1,0 +1,3 @@
+api.home:
+  path: /
+  defaults: { _controller: ApiController::homeAction}

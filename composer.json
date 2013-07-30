@@ -1,0 +1,34 @@
+{
+    "name": "gonzalo123/g",
+    "description": "Full stack framework based on symfony's components",
+    "license":"MIT",
+    "keywords":["symfony", "framework"],
+    "authors": [
+        {
+            "name": "Gonzalo Ayuso",
+            "email": "gonzalo123@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/routing": "v2.3.1",
+        "symfony/http-foundation": "v2.3.1",
+        "symfony/yaml": "v2.3.1",
+        "symfony/config": "v2.3.1",
+        "symfony/dependency-injection": "v2.3.1",
+        "symfony/event-dispatcher": "v2.3.1",
+        "symfony/http-kernel": "v2.3.1",
+        "doctrine/dbal": "2.3.4",
+        "twig/twig": "v1.13.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.22"
+    },
+    "autoload": {
+        "psr-0": {
+            "": ["lib/", "app/"]
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
