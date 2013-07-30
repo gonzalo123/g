@@ -57,7 +57,7 @@ services:
 ```
 
 ### Controller
-```
+```php
 <?php
 
 class AppController
@@ -78,7 +78,7 @@ hello:
   defaults: { _controller: AppController::helloAction}
 ```
 
-```
+```php
 class AppController
 {
     private $request;
@@ -107,7 +107,7 @@ restResources:
 
 And we define our BookResource
 
-```
+```php
 <?php
 
 class BookResource
