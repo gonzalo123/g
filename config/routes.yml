@@ -2,6 +2,10 @@ home:
   path: /
   defaults: { _controller: AppController::homeAction}
 
+private:
+  path: /private
+  defaults: { _controller: PrivateController::homeAction}
+
 hello:
   path: /hello/{name}
   defaults: { _controller: AppController::helloAction}

@@ -2,6 +2,7 @@
 
 namespace G\HttpKernel;
 
+use G\Exception\SecurityException;
 use G\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,21 +35,18 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
         $this->controller = $this->controllerResolver->getController($request);
         $this->dispatchEvent(KernelEvent::EVENT_CONTROLLER_DECODED);
 
-        $class   = new \ReflectionClass($this->controller[0]);
-        $instance = $this->getInstance($class);
-        $this->dispatchEvent(KernelEvent::EVENT_CONTROLLER_CONSTRUCTOR);
-
-        $callParameters = $this->controllerResolver->getArguments($this->request, $this->controller);
-        $response       = call_user_func_array([$instance, $this->controller[1]], $callParameters);
-        $this->dispatchEvent(KernelEvent::EVENT_CONTROLLER_ACTION);
-
-        if (!($response instanceof Response)) {
-            $response = new Response($response);
+        $class = new \ReflectionClass($this->controller[0]);
+        if ($class->implementsInterface('G\SecureArea')) {
+            try {
+                $this->dispatchEvent(KernelEvent::EVENT_CONTROLLER_SECURITY);
+            } catch (SecurityException $e) {
+                $this->dispatchEvent(KernelEvent::EVENT_LOGIN);
+                $class = new \ReflectionClass($this->controller[0]);
+            }
         }
 
-        $this->dispatchEvent(KernelEvent::EVENT_RESPONSE);
+        return $this->runClass($this->getInstance($class));
 
-        return $response;
     }
 
     private function dispatchEvent($eventId)
@@ -61,7 +59,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
         $this->dispatchEvent(KernelEvent::EVENT_FINISH);
     }
 
-    private function getInstance(\ReflectionClass $class)
+    private function getInstance($class)
     {
         $callParameters = [];
         if ($class->hasMethod('__construct')) {
@@ -100,5 +98,22 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
     public function getRequest()
     {
         return $this->request;
+    }
+
+    private function runClass($instance)
+    {
+        $this->dispatchEvent(KernelEvent::EVENT_CONTROLLER_CONSTRUCTOR);
+
+        $callParameters = $this->controllerResolver->getArguments($this->request, $this->controller);
+        $response       = call_user_func_array([$instance, $this->controller[1]], $callParameters);
+        $this->dispatchEvent(KernelEvent::EVENT_CONTROLLER_ACTION);
+
+        if (!($response instanceof Response)) {
+            $response = new Response($response);
+        }
+
+        $this->dispatchEvent(KernelEvent::EVENT_RESPONSE);
+
+        return $response;
     }
 }

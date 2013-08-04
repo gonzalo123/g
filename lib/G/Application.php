@@ -5,6 +5,7 @@ namespace G;
 use G\Application\DispatcherTrait;
 use G\HttpKernel\Controller\ControllerResolver;
 use G\HttpKernel\Dependency\Resolver;
+use G\HttpKernel\Event\KernelEvent;
 use G\HttpKernel\HttpKernel;
 use G\Route\RestExtension;
 
@@ -81,8 +82,15 @@ class Application
 
         $dependencyResolver = new Resolver($container);
         $controllerResolver = new ControllerResolver($routes, $dependencyResolver);
-
-        return new HttpKernel(new EventDispatcher(), $controllerResolver);
+        $eventDispatcher    = new EventDispatcher();
+        $eventDispatcher->addListener(KernelEvent::EVENT_CONTROLLER_SECURITY, function (KernelEvent $event) use ($container) {
+                $security = $container->getParameter('security');
+                $obj = new $security['class']($event->getKernel()->getRequest());
+            }, 1);
+        $eventDispatcher->addListener(KernelEvent::EVENT_LOGIN, function (KernelEvent $event) use ($container) {
+                $event->getKernel()->setController(explode('::', $container->getParameter('security')['login'], 2));
+            }, 1);
+        return new HttpKernel($eventDispatcher, $controllerResolver);
     }
 
     public static function factory($conf)

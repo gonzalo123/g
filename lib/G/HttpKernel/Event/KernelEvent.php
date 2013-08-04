@@ -15,6 +15,8 @@ class KernelEvent extends Event
     const EVENT_RESPONSE               = 4;
     const EVENT_FINISH                 = 5;
     const EVENT_EXCEPTION              = 6;
+    const EVENT_CONTROLLER_SECURITY    = 7;
+    const EVENT_LOGIN                  = 8;
 
     protected $kernel;
 

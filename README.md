@@ -109,8 +109,13 @@ And we define our BookResource
 
 ```php
 <?php
+use G\RESTFull\Get;
+use G\RESTFull\GetAll;
+use G\RESTFull\Delete;
+use G\RESTFull\Create;
+use G\RESTFull\Update;
 
-class BookResource
+class BookResource implements Get, GetAll, Delete, Create, Update
 {
     public function getAction($id)
     {

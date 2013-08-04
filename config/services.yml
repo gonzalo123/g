@@ -3,6 +3,11 @@ imports:
   - resource: services/view.yml
   - resource: rest/resources.yml
 
+parameters:
+  security:
+    class: Security
+    login: LoginController::homeAction
+
 services:
   Foo\Bar:
     class: Foo\Bar
