@@ -1,5 +1,7 @@
 # G. Another Full stack framework
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/c473b8d2-5552-43c5-8aaf-1c83115576e4/big.png)](https://insight.sensiolabs.com/projects/c473b8d2-5552-43c5-8aaf-1c83115576e4)
+
 ## instalation:
 
 ### composer
