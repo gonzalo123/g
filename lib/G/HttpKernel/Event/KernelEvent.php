@@ -4,7 +4,6 @@ namespace G\HttpKernel\Event;
 
 use G\HttpKernel\HttpKernel;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\Request;
 
 class KernelEvent extends Event
 {

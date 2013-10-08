@@ -4,7 +4,6 @@ namespace G\HttpKernel\Controller;
 
 use G\HttpKernel\Dependency\Resolver;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\Routing;
 use Symfony\Component\Routing\RouteCollection;

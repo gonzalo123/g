@@ -1,7 +1,6 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use G\Db;
@@ -25,7 +24,7 @@ class AppController
         return "home" . $name . $this->request->get('xxx', '1');
     }
 
-    public function dbAction($name, Db $db, JsonResponse $response)
+    public function dbAction(Db $db, JsonResponse $response)
     {
         $conn  = $db->getConnection();
         $sql = "SELECT * FROM test";
