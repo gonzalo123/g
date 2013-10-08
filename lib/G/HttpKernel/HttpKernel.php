@@ -58,7 +58,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
         $this->dispatchEvent(KernelEvent::EVENT_FINISH);
     }
 
-    private function getInstance($class)
+    private function getInstance(\ReflectionClass $class)
     {
         $callParameters = [];
         if ($class->hasMethod('__construct')) {
